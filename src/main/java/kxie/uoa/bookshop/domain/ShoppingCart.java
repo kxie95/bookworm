@@ -15,6 +15,5 @@ public class ShoppingCart {
 	}
 	
 	public void getTotalPrice() {
-		for (Set<Book> in _boo)
 	}
 }
