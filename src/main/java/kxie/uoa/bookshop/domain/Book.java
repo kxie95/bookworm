@@ -1,5 +1,10 @@
 package kxie.uoa.bookshop.domain;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Bean class to represent a Book product.
  * 
@@ -7,53 +12,66 @@ package kxie.uoa.bookshop.domain;
  *
  */
 public class Book {
-	private int _id;
+	@Id
+	@Column(name="BOOK_ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long _id;
+	
+	@Column(name="TITLE")
 	private String _title;
+	
+	@Column(name="AUTHOR")
 	private String _author;
-	private Genre _genre;
+	
+	@Column(name="GENRE")
+	private String _genre;
+	
+	@Column(name="PRICE")
 	private double _price;
 	
-	public enum Genre {
-		FICTION, NON_FICTION;
-	}
+	private Review _review;
 
-	public int get_id() {
+	public Long getId() {
 		return _id;
 	}
 
-	public void set_id(int id) {
-		_id = id;
-	}
-
-	public String get_title() {
+	public String getTitle() {
 		return _title;
 	}
 
-	public void set_title(String title) {
+	public void setTitle(String title) {
 		_title = title;
 	}
 
-	public String get_author() {
+	public String getAuthor() {
 		return _author;
 	}
 
-	public void set_author(String author) {
+	public void setAuthor(String author) {
 		_author = author;
 	}
-
-	public Genre get_genre() {
-		return _genre;
-	}
-
-	public void set_genre(Genre genre) {
-		_genre = genre;
-	}
 	
-	public double get_price() {
+	public double getPrice() {
 		return _price;
 	}
 	
-	public void set_price(double price) {
+	public void setPrice(double price) {
 		_price = price;
+	}
+
+	public Review getReview() {
+		return _review;
+	}
+
+	public void setReview(Review review) {
+		_review = review;
+	}
+
+	public String getGenre() {
+		return _genre;
+	}
+
+	public void setGenre(String genre) {
+		_genre = genre;
 	}
 }
