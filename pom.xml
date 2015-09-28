@@ -21,24 +21,34 @@
             <artifactId>resteasy-jaxrs</artifactId>
             <version>3.0.9.Final</version>
         </dependency>
+        
         <!-- RESTEasy Client API -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
             <version>3.0.9.Final</version>
         </dependency>
+        
         <!--  RESTEasy API -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>jaxrs-api</artifactId>
             <version>3.0.9.Final</version>
         </dependency>
+        
         <!--  RESTEasy deployment library -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-servlet-initializer</artifactId>
             <version>3.0.9.Final</version>
         </dependency>
+        
+        <!-- Apache commons utility library. -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
         
         <!-- Joda date/time library -->
         <dependency>

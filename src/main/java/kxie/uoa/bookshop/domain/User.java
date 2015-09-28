@@ -26,7 +26,8 @@ public class User {
 	@Column
 	private String _firstname;
 	
-	private Address _address;
+	@Column
+	private String _password;
 	
 	private ShoppingCart _shoppingCart;
 	
@@ -34,11 +35,19 @@ public class User {
 	
 	private List<Review> _reviews;
 	
-	public User(String username, String lastname, String firstname, Address address) {
+	public User(String username, String password, String lastname, String firstname) {
 		_username = username;
+		_password = password;
 		_lastname = lastname;
 		_firstname = firstname;
-		_address = address;
+	}
+	
+	public User(long id, String username, String password, String lastname, String firstname) {
+		_id = id;
+		_username = username;
+		_password = password;
+		_lastname = lastname;
+		_firstname = firstname;
 	}
 	
 	public User(String username) {
@@ -51,26 +60,38 @@ public class User {
 		return _id;
 	}
 	
+	public void setId(long id) {
+		_id = id;	
+	}
+	
 	public String getUsername() {
 		return _username;
+	}
+	
+	public String getPassword() {
+		return _password;
+	}
+	
+	public void setPassword(String password) {
+		_password = password;
 	}
 	
 	public String getLastname() {
 		return _lastname;
 	}
 	
+	public void setLastname(String lastname) {
+		_lastname = lastname;
+	}
+	
 	public String getFirstname() {
 		return _firstname;
 	}
 
-	public Address getAddress() {
-		return _address;
+	public void setFirstname(String firstname) {
+		_firstname = firstname;
 	}
-
-	public void setAddress(Address address) {
-		_address = address;
-	}
-
+	
 	public ShoppingCart getShoppingCart() {
 		return _shoppingCart;
 	}
@@ -94,4 +115,9 @@ public class User {
 	public void setReviews(List<Review> reviews) {
 		_reviews = reviews;
 	}
+
+	public void addOrderToHistory(Order order) {
+		_orderHistory.add(order);
+	}
+
 }
