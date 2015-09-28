@@ -14,6 +14,13 @@
   </properties>
 
   <dependencies>
+      	<!-- Basic servlet API. -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		
 		<!-- JAX-RS DEPENDENCIES -->
 		<!-- RESTEasy implementation -->
         <dependency>
@@ -106,14 +113,14 @@
 		<finalName>book-shop</finalName>
 		
 		<plugins>
-			<!-- Allow use of Java language 6 features, e.g. annotations. -->
+			<!-- Allow use of Java language 7 features, e.g. annotations. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			
