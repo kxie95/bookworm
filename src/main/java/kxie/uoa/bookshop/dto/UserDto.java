@@ -47,8 +47,7 @@ public class UserDto {
 	 * Constructs a DTO User instance. This method is intended to be called by
 	 * Web service clients when creating new Users.
 	 */
-	public UserDto(String username, String password, String lastname, String firstname)
-			throws IllegalArgumentException {
+	public UserDto(String username, String password, String lastname, String firstname) throws IllegalArgumentException {
 		this(0, username, password, lastname, firstname, null);
 	}
 
@@ -118,24 +117,14 @@ public class UserDto {
 			return true;
 
 		UserDto rhs = (UserDto) obj;
-		return new EqualsBuilder().
-				append(_id, rhs._id).
-				append(_username, rhs._id).
-				append(_password, rhs._password).
-				append(_lastname, rhs._lastname).
-				append(_firstname, rhs._firstname).
-				isEquals();
+		return new EqualsBuilder().append(_id, rhs._id).append(_username, rhs._id).append(_password, rhs._password)
+				.append(_lastname, rhs._lastname).append(_firstname, rhs._firstname).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 31).
-				append(_id).
-				append(_username).
-				append(_password).
-				append(_lastname).
-				append(_firstname).
-				toHashCode();
+		return new HashCodeBuilder(17, 31).append(_id).append(_username).append(_password).append(_lastname).append(_firstname)
+				.toHashCode();
 	}
 
 	@Override

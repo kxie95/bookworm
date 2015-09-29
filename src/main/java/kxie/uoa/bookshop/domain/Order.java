@@ -1,7 +1,7 @@
 package kxie.uoa.bookshop.domain;
 
 import java.util.Date;
-import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -13,14 +13,45 @@ import javax.persistence.TemporalType;
 public class Order {
 	public enum PaymentMethod {
 		CREDIT_CARD, BANK_TRANSFER, PAYPAL;
+
+		public static PaymentMethod fromString(String text) {
+			if (text.equalsIgnoreCase(BANK_TRANSFER.toString())) {
+				return PaymentMethod.BANK_TRANSFER;
+			} else if (text.equalsIgnoreCase(CREDIT_CARD.toString())) {
+				return PaymentMethod.CREDIT_CARD;
+			} else if (text.equalsIgnoreCase(PAYPAL.toString())) {
+				return PaymentMethod.PAYPAL;
+			}
+			return null;
+		}
 	}
 
 	public enum OrderStatus {
 		PROCESSING, DISPATCHED, RECEIVED;
+
+		public static OrderStatus fromString(String text) {
+			if (text.equalsIgnoreCase(PROCESSING.toString())) {
+				return OrderStatus.PROCESSING;
+			} else if (text.equalsIgnoreCase(DISPATCHED.toString())) {
+				return OrderStatus.DISPATCHED;
+			} else if (text.equalsIgnoreCase(RECEIVED.toString())) {
+				return OrderStatus.RECEIVED;
+			}
+			return null;
+		}
 	}
 
 	public enum ShippingMethod {
 		STANDARD, EXPRESS;
+
+		public static ShippingMethod fromString(String text) {
+			if (text.equalsIgnoreCase(STANDARD.toString())) {
+				return ShippingMethod.STANDARD;
+			} else if (text.equalsIgnoreCase(EXPRESS.toString())) {
+				return ShippingMethod.EXPRESS;
+			}
+			return null;
+		}
 	}
 
 	@Id
@@ -34,7 +65,7 @@ public class Order {
 	@Column(name = "PAYMENT_METHOD")
 	private PaymentMethod _paymentMethod;
 
-	private HashMap<Book, Integer> _booksOrdered;
+	private HashSet<BookOrder> _booksOrdered;
 
 	@Temporal(TemporalType.DATE)
 	private Date _dateOrdered;
@@ -43,11 +74,15 @@ public class Order {
 
 	private ShippingMethod _shippingMethod;
 
+	@Column(name = "CUSTOMER")
+	private String _customerName;
+
 	public Order() {
 	}
 
-	public Order(double totalCost, HashMap<Book, Integer> booksOrdered, Date dateOrdered,
-			ShippingMethod shippingMethod, PaymentMethod paymentMethod) {
+	public Order(long id, double totalCost, HashSet<BookOrder> booksOrdered, Date dateOrdered, ShippingMethod shippingMethod,
+			PaymentMethod paymentMethod) {
+		_id = id;
 		_totalCost = totalCost;
 		_booksOrdered = booksOrdered;
 		_dateOrdered = dateOrdered;
@@ -55,9 +90,6 @@ public class Order {
 		_shippingMethod = shippingMethod;
 		_paymentMethod = paymentMethod;
 	}
-
-	@Column(name = "CUSTOMER")
-	private String _customerName;
 
 	public long getId() {
 		return _id;
@@ -79,11 +111,11 @@ public class Order {
 		_paymentMethod = paymentMethod;
 	}
 
-	public HashMap<Book, Integer> getBooksOrdered() {
+	public HashSet<BookOrder> getBooksOrdered() {
 		return _booksOrdered;
 	}
 
-	public void setBooksOrdered(HashMap<Book, Integer> booksOrdered) {
+	public void setBooksOrdered(HashSet<BookOrder> booksOrdered) {
 		_booksOrdered = booksOrdered;
 	}
 

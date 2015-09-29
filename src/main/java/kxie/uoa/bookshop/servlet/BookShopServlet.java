@@ -1,6 +1,7 @@
 package kxie.uoa.bookshop.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,5 +37,8 @@ public class BookShopServlet extends HttpServlet {
 
 		// Set the content-type header.
 		response.addHeader("Content-Type", "text/html");
+
+		PrintWriter out = response.getWriter();
+
 	}
 }

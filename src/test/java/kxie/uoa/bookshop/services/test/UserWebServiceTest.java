@@ -3,18 +3,16 @@ package kxie.uoa.bookshop.services.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
-import kxie.uoa.bookshop.domain.Book;
-import kxie.uoa.bookshop.domain.Order;
-import kxie.uoa.bookshop.domain.Order.PaymentMethod;
-import kxie.uoa.bookshop.domain.Order.ShippingMethod;
+import kxie.uoa.bookshop.domain.BookOrder;
+import kxie.uoa.bookshop.dto.OrderDto;
 import kxie.uoa.bookshop.dto.UserDto;
 
 import org.junit.AfterClass;
@@ -42,9 +40,7 @@ public class UserWebServiceTest {
 	 */
 	@Before
 	public void reloadServerData() {
-		Response response = _client
-				.target(WEB_SERVICE_URI).request()
-				.put(null);
+		Response response = _client.target(WEB_SERVICE_URI).request().put(null);
 		response.close();
 
 		// Pause briefly before running any tests. Test addParoleeMovement(),
@@ -74,9 +70,7 @@ public class UserWebServiceTest {
 	public void addUser() {
 		UserDto karen = new UserDto("kxie", "1234", "Xie", "Karen");
 
-		Response response = _client
-				.target(WEB_SERVICE_URI).request()
-				.post(Entity.xml(karen));
+		Response response = _client.target(WEB_SERVICE_URI).request().post(Entity.xml(karen));
 		if (response.getStatus() != 201) {
 			fail("Failed to create new User");
 		}
@@ -85,8 +79,7 @@ public class UserWebServiceTest {
 		response.close();
 
 		// Query the Web service for the new User
-		UserDto karenFromService = _client.target(location).request()
-				.accept("application/xml").get(UserDto.class);
+		UserDto karenFromService = _client.target(location).request().accept("application/xml").get(UserDto.class);
 
 		// The original local User object (karen) should have a value equal
 		// to that of the User object representing Karen that is later
@@ -100,33 +93,27 @@ public class UserWebServiceTest {
 	}
 
 	/**
-	 * Tests that the Web serves can process requests to record new Parolee
-	 * movements.
+	 * Tests that the Web service can process requests to record new User order.
 	 */
 	@Test
 	public void addToOrderHistory() {
 
+		AtomicLong orderId = new AtomicLong();
+		orderId.set(0);
 		// Make new order
-		HashMap<Book, Integer> books = new HashMap<>();
-		books.put(new Book("Ron Weasley", "JK Rowling", "Fiction", 12.00, null), 1);
-		Order newOrder = new Order(1.11,
-				books, new Date(),
-				ShippingMethod.STANDARD,
-				PaymentMethod.BANK_TRANSFER);
+		HashSet<BookOrder> books = new HashSet<>();
+		books.add(new BookOrder("1234abcd", 1));
+		OrderDto newOrder = new OrderDto(orderId.incrementAndGet(), 1.11, books, "Standard", "Bank_transfer");
 
-		Response response = _client
-				.target(WEB_SERVICE_URI + "/1/orders")
-				.request().post(Entity.xml(newOrder));
+		Response response = _client.target(WEB_SERVICE_URI + "/1/orders").request().post(Entity.xml(newOrder));
 		if (response.getStatus() != 204) {
-			fail("Failed to create new Movement");
+			fail("Failed to create new order");
 		}
 		response.close();
 
-		// Query the Web service for the Parolee whose location has been
+		// Query the Web service for the User whose order history has been
 		// updated.
-		UserDto karen = _client
-				.target(WEB_SERVICE_URI + "/1").request()
-				.accept("application/xml").get(UserDto.class);
+		UserDto karen = _client.target(WEB_SERVICE_URI + "/1").request().accept("application/xml").get(UserDto.class);
 		assertEquals(newOrder, karen.getMostRecentOrder());
 	}
 

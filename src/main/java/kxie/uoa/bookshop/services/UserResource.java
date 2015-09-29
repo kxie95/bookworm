@@ -2,7 +2,7 @@ package kxie.uoa.bookshop.services;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,7 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import kxie.uoa.bookshop.domain.Book;
+import kxie.uoa.bookshop.domain.BookOrder;
 import kxie.uoa.bookshop.domain.Order;
 import kxie.uoa.bookshop.domain.Order.PaymentMethod;
 import kxie.uoa.bookshop.domain.Order.ShippingMethod;
@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * this class handles all HTTP requests for the User Web service.
  * 
  * @author kxie094
- *
+ * 
  */
 @Path("/users")
 public class UserResource {
@@ -70,8 +70,7 @@ public class UserResource {
 		_userDB.put(user.getId(), user);
 
 		_logger.debug("Created user: " + user);
-		return Response.created(URI.create("/users/" + user.getId()))
-				.build();
+		return Response.created(URI.create("/users/" + user.getId())).build();
 	}
 
 	/**
@@ -180,11 +179,7 @@ public class UserResource {
 
 		// === Initialise Parolee #1
 		long id = _idCounter.incrementAndGet();
-		User user = new User(id,
-				"kxie",
-				"1234",
-				"Xie",
-				"Karen");
+		User user = new User(id, "kxie", "1234", "Xie", "Karen");
 		_userDB.put(id, user);
 
 		// Make new order
@@ -192,10 +187,10 @@ public class UserResource {
 		order.setTotalCost(1.11);
 		order.setCustomerName("Karen Xie");
 		order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
-		HashMap<Book, Integer> booksOrdered = new HashMap<>();
-		Book book = new Book("Harry", "JK", "Fiction", 10.00, null);
-		booksOrdered.put(book, 1);
-		order.setBooksOrdered(booksOrdered);
+
+		HashSet<BookOrder> b = new HashSet<BookOrder>();
+		b.add(new BookOrder("5678efgh", 5));
+		order.setBooksOrdered(b);
 		order.setDateOrdered();
 		order.setShippingMethod(ShippingMethod.EXPRESS);
 
