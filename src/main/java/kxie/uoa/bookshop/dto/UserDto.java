@@ -49,7 +49,7 @@ public class UserDto {
 	 */
 	public UserDto(String username, String password, String lastname, String firstname)
 			throws IllegalArgumentException {
-		this(0, username, password, lastname, firstname);
+		this(0, username, password, lastname, firstname, null);
 	}
 
 	/**
@@ -57,12 +57,13 @@ public class UserDto {
 	 * Service implementation when creating a DTO User from a domain-model
 	 * Parolee object.
 	 */
-	public UserDto(long id, String username, String password, String lastname, String firstname) {
+	public UserDto(long id, String username, String password, String lastname, String firstname, Order mostRecent) {
 		_id = id;
 		_username = username;
 		_password = password;
 		_lastname = lastname;
 		_firstname = firstname;
+		_mostRecentOrder = mostRecent;
 	}
 
 	public long getId() {
