@@ -29,6 +29,13 @@
             <version>3.0.9.Final</version>
         </dependency>
         
+        <!-- RESTEasy jaxb provider -->
+        <dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>2.2.0.GA</version>
+		</dependency>
+		
         <!-- RESTEasy Client API -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -49,7 +56,7 @@
             <artifactId>resteasy-servlet-initializer</artifactId>
             <version>3.0.9.Final</version>
         </dependency>
-        
+    	
         <!-- Apache commons utility library. -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

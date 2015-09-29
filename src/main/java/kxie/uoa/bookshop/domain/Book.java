@@ -1,5 +1,7 @@
 package kxie.uoa.bookshop.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +31,16 @@ public class Book {
 	@Column(name="PRICE")
 	private double _price;
 	
-	private Review _review;
+	private List<Review> _reviews;
 
+	public Book(String title, String author, String genre, double price, List<Review> reviews) {
+		_title = title;
+		_author = author;
+		_genre = genre;
+		_price = price;
+		_reviews = reviews;
+	}
+	
 	public Long getId() {
 		return _id;
 	}
@@ -59,12 +69,12 @@ public class Book {
 		_price = price;
 	}
 
-	public Review getReview() {
-		return _review;
+	public List<Review> getReviews() {
+		return _reviews;
 	}
 
-	public void setReview(Review review) {
-		_review = review;
+	public void setReviews(List<Review> reviews) {
+		_reviews = reviews;
 	}
 
 	public String getGenre() {
