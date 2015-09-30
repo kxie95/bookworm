@@ -1,56 +1,51 @@
-package kxie.uoa.bookshop.domain;
+package kxie.uoa.bookshop.dto;
 
 import java.util.Date;
-import java.util.HashMap;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MapKeyColumn;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class Order {
-	@Id
-	@Column(name = "ORDER_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@XmlRootElement(name = "order")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class OrderDto {
+
+	@XmlAttribute(name = "id")
 	private Long _id;
 
-	@Column(name = "ORDER_TOTAL")
+	@XmlElement(name = "total")
 	private double _totalCost;
 
-	@Column(name = "PAYMENT_METHOD")
-	private String _paymentMethod;
-
-	@MapKeyColumn(name = "BOOK")
-	@Column(name = "QUANTITY")
-	private HashMap<Book, Integer> _booksOrdered;
-
-	@Column(name = "DATE")
+	@XmlElement(name = "date-ordered")
 	private String _dateOrdered;
 
-	@Column(name = "ORDER_STATUS")
+	@XmlElement(name = "order-status")
 	private String _orderStatus;
 
-	@Column(name = "SHIPPING_METHOD")
+	@XmlElement(name = "shipping-method")
 	private String _shippingMethod;
 
-	@Column(name = "CUSTOMER")
+	@XmlElement(name = "payment")
+	private String _paymentMethod;
+
+	@XmlElement(name = "name")
 	private String _customerName;
 
-	public Order() {
+	private OrderDto() {
 	}
 
 	/**
-	 * Used for dto-order mapping.
+	 * Constructor for OrderDto.
 	 * 
 	 * @param id
 	 * @param totalCost
-	 * @param customerName
-	 * @param dateOrdered
+	 * @param booksOrdered
 	 * @param shippingMethod
 	 * @param paymentMethod
 	 */
-	public Order(long id, double totalCost, String customerName, String dateOrdered, String shippingMethod, String paymentMethod) {
+	public OrderDto(long id, double totalCost, String dateOrdered, String customerName, String shippingMethod, String paymentMethod) {
 		_id = id;
 		_totalCost = totalCost;
 		_customerName = customerName;
@@ -78,14 +73,6 @@ public class Order {
 
 	public void setPaymentMethod(String paymentMethod) {
 		_paymentMethod = paymentMethod;
-	}
-
-	public HashMap<Book, Integer> getBooksOrdered() {
-		return _booksOrdered;
-	}
-
-	public void setBooksOrdered(HashMap<Book, Integer> booksOrdered) {
-		_booksOrdered = booksOrdered;
 	}
 
 	public String getDateOrdered() {
