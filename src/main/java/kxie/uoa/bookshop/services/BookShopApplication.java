@@ -16,7 +16,7 @@ public class BookShopApplication extends Application {
 		UserResource resource = new UserResource();
 		singletons.add(resource);
 		// Register the ContextResolver class for JAXB.
-		classes.add(UserResolver.class);
+		classes.add(BookShopResolver.class);
 
 	}
 

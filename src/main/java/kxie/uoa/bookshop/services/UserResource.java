@@ -2,7 +2,6 @@ package kxie.uoa.bookshop.services;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,11 +17,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import kxie.uoa.bookshop.domain.BookOrder;
 import kxie.uoa.bookshop.domain.Order;
-import kxie.uoa.bookshop.domain.Order.PaymentMethod;
-import kxie.uoa.bookshop.domain.Order.ShippingMethod;
 import kxie.uoa.bookshop.domain.User;
+import kxie.uoa.bookshop.dto.OrderDto;
 import kxie.uoa.bookshop.dto.UserDto;
 
 import org.slf4j.Logger;
@@ -107,12 +104,14 @@ public class UserResource {
 	@PUT
 	@Path("{id}/orders")
 	@Consumes("application/xml")
-	public void updateOrderHistory(@PathParam("id") long id, Order order) {
+	public void updateOrderHistory(@PathParam("id") long id, OrderDto order) {
 		// Get the full User object from the database.
 		User user = findUser(id);
 
+		Order fullOrder = OrderMapper.toDomainModel(order);
+
 		// Update the user's order history.
-		user.addOrderToHistory(order);
+		user.addOrderToHistory(fullOrder);
 	}
 
 	/**
@@ -184,15 +183,6 @@ public class UserResource {
 
 		// Make new order
 		Order order = new Order();
-		order.setTotalCost(1.11);
-		order.setCustomerName("Karen Xie");
-		order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
-
-		HashSet<BookOrder> b = new HashSet<BookOrder>();
-		b.add(new BookOrder("5678efgh", 5));
-		order.setBooksOrdered(b);
-		order.setDateOrdered();
-		order.setShippingMethod(ShippingMethod.EXPRESS);
 
 		user.addOrderToHistory(order);
 	}

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OrderColumn;
 
 /**
  * Bean class to represent a Book product.
@@ -34,17 +35,20 @@ public class Book {
 	@Column(name = "PRICE")
 	private double _price;
 
+	@OrderColumn(name = "REVIEW_ORDER")
 	private List<Review> _reviews;
 
 	public Book() {
 	}
 
-	public Book(String title, String author, String genre, double price, List<Review> reviews) {
+	/**
+	 * Constructor for BookDto-Book mapping.
+	 */
+	public Book(long id, String title, String author, double price) {
+		_id = id;
 		_title = title;
 		_author = author;
-		_genre = genre;
 		_price = price;
-		_reviews = reviews;
 	}
 
 	public Long getId() {

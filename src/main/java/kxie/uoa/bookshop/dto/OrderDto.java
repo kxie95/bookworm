@@ -1,15 +1,15 @@
 package kxie.uoa.bookshop.dto;
 
 import java.util.Date;
-import java.util.HashSet;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import kxie.uoa.bookshop.domain.BookOrder;
-
 @XmlRootElement(name = "order")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrderDto {
 
 	@XmlAttribute(name = "id")
@@ -19,7 +19,7 @@ public class OrderDto {
 	private double _totalCost;
 
 	@XmlElement(name = "date-ordered")
-	private Date _dateOrdered;
+	private String _dateOrdered;
 
 	@XmlElement(name = "order-status")
 	private String _orderStatus;
@@ -30,19 +30,26 @@ public class OrderDto {
 	@XmlElement(name = "payment")
 	private String _paymentMethod;
 
-	@XmlElement(name = "books-ordered")
-	private HashSet<BookOrder> _booksOrdered;
-
+	@XmlElement(name = "name")
 	private String _customerName;
 
 	private OrderDto() {
 	}
 
-	public OrderDto(long id, double totalCost, HashSet<BookOrder> booksOrdered, String shippingMethod, String paymentMethod) {
+	/**
+	 * Constructor for OrderDto.
+	 * 
+	 * @param id
+	 * @param totalCost
+	 * @param booksOrdered
+	 * @param shippingMethod
+	 * @param paymentMethod
+	 */
+	public OrderDto(long id, double totalCost, String dateOrdered, String customerName, String shippingMethod, String paymentMethod) {
 		_id = id;
 		_totalCost = totalCost;
-		_booksOrdered = booksOrdered;
-		_dateOrdered = new Date();
+		_customerName = customerName;
+		_dateOrdered = dateOrdered;
 		_orderStatus = "Processing";
 		_shippingMethod = shippingMethod;
 		_paymentMethod = paymentMethod;
@@ -68,20 +75,12 @@ public class OrderDto {
 		_paymentMethod = paymentMethod;
 	}
 
-	public HashSet<BookOrder> getBooksOrdered() {
-		return _booksOrdered;
-	}
-
-	public void setBooksOrdered(HashSet<BookOrder> booksOrdered) {
-		_booksOrdered = booksOrdered;
-	}
-
-	public Date getDateOrdered() {
+	public String getDateOrdered() {
 		return _dateOrdered;
 	}
 
-	public void setDateOrdered() {
-		_dateOrdered = new Date();
+	public void setDateOrdered(Date date) {
+		_dateOrdered = date.toString();
 	}
 
 	public String getOrderStatus() {

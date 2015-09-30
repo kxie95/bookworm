@@ -1,24 +1,25 @@
 package kxie.uoa.bookshop.servlet;
 
-import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
-import kxie.uoa.bookshop.domain.BookOrder;
-import kxie.uoa.bookshop.dto.OrderDto;
+import kxie.uoa.bookshop.domain.Order;
+import kxie.uoa.bookshop.dto.UserDto;
 
 public class Test {
 	public static void main(String[] args) {
 		try {
 			AtomicLong orderId = new AtomicLong();
 			orderId.set(0);
-			HashSet<BookOrder> books = new HashSet<BookOrder>();
-			books.add(new BookOrder("5678efgh", 5));
-			OrderDto newOrder = new OrderDto(orderId.incrementAndGet(), 1.11, books, "Standard", "Bank_transfer");
-			JAXBContext jaxbcontext = JAXBContext.newInstance(OrderDto.class);
-			jaxbcontext.createMarshaller().marshal(newOrder, System.out);
+
+			UserDto user = new UserDto(orderId.incrementAndGet(), "kxie", "1234", "Xie", "Karen", new Order());
+			JAXBContext jaxbcontext = JAXBContext.newInstance(UserDto.class);
+			Marshaller marshal = jaxbcontext.createMarshaller();
+			marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshal.marshal(user, System.out);
 
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

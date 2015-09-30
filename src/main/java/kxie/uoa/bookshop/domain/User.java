@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -32,8 +33,10 @@ public class User {
 
 	private ShoppingCart _shoppingCart;
 
+	@OrderColumn(name = "ORDER_ORDER")
 	private List<Order> _orderHistory;
 
+	@OrderColumn(name = "REVIEW_ORDER")
 	private List<Review> _reviews;
 
 	public User(String username, String password, String lastname, String firstname) {
