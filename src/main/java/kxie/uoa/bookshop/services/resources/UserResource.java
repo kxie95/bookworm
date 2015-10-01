@@ -7,13 +7,17 @@ import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import kxie.uoa.bookshop.domain.Order;
 import kxie.uoa.bookshop.domain.User;
+import kxie.uoa.bookshop.dto.OrderDto;
 import kxie.uoa.bookshop.dto.UserDto;
+import kxie.uoa.bookshop.services.mappers.OrderMapper;
 import kxie.uoa.bookshop.services.mappers.UserMapper;
 
 import org.slf4j.Logger;
@@ -80,27 +84,27 @@ public class UserResource {
 		return userDto;
 	}
 
-//	/**
-//	 * Updates a User's order history.
-//	 * 
-//	 * @param id
-//	 *            the unique identifier of the User.
-//	 * @param order
-//	 *            the User's order to add to their history.
-//	 */
-//	@PUT
-//	@Path("{id}/orders")
-//	@Consumes("application/xml")
-//	public void updateOrderHistory(@PathParam("id") long id, OrderDto order) {
-//		// Get the full User object from the database.
-//		User user = findUser(id);
-//
-//		Order fullOrder = OrderMapper.toDomainModel(order);
-//
-//		// Update the user's order history.
-//		user.addOrderToHistory(fullOrder);
-//	}
-//
+	/**
+	 * Updates a User's order history.
+	 * 
+	 * @param id
+	 *            the unique identifier of the User.
+	 * @param order
+	 *            the User's order to add to their history.
+	 */
+	@PUT
+	@Path("{id}/orders")
+	@Consumes("application/xml")
+	public void updateOrderHistory(@PathParam("id") long id, OrderDto orderDto) {
+		// Get the full User object from the database.
+		User user = em.find(User.class, id);
+
+		Order fullOrder = OrderMapper.toDomainModel(orderDto);
+
+		// Update the user's order history.
+		user.addOrder(fullOrder);
+	}
+
 
 //
 //	/**

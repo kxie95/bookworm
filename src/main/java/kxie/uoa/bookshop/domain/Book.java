@@ -33,7 +33,7 @@ public class Book {
 	@Column(nullable = false)
 	private String author;
 
-	@JoinTable(name = "BOOK_GENRE", joinColumns = @JoinColumn(name = "personID"))
+	@JoinTable(name = "BOOK_GENRE", joinColumns = @JoinColumn(name = "book_id", nullable = false))
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Genre genre;

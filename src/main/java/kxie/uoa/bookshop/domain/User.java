@@ -1,7 +1,9 @@
 package kxie.uoa.bookshop.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +44,9 @@ public class User {
 	
 	@OneToMany(mappedBy="reviewer", fetch = FetchType.LAZY)
 	private List<Review> reviews = new ArrayList<>();
+	
+	@OneToMany
+	private Set<Order> orders = new HashSet<>();
 
 	protected User() {
 	}
@@ -80,9 +85,10 @@ public class User {
 	public List<Review> getReviews() {return reviews;}
 
 	public void setReviews(List<Review> reviews) {this.reviews = reviews;}
+
+	public Set<Order> getOrders() {return orders;}
+
+	public void setOrders(Set<Order> orders) {this.orders = orders;}
 	
-	/**
-	 * Used to update the collection of reviews a user has.
-	 */
-	public void addReview(Review review) {this.reviews.add(review);}
+	public void addOrder(Order order) {orders.add(order);}
 }

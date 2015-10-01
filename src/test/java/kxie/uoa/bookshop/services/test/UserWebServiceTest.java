@@ -3,14 +3,27 @@ package kxie.uoa.bookshop.services.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import kxie.uoa.bookshop.domain.Book;
+import kxie.uoa.bookshop.domain.BookOrder;
+import kxie.uoa.bookshop.domain.Genre;
+import kxie.uoa.bookshop.domain.OrderStatus;
+import kxie.uoa.bookshop.domain.PaymentMethod;
+import kxie.uoa.bookshop.domain.ShippingMethod;
+import kxie.uoa.bookshop.domain.User;
 import kxie.uoa.bookshop.dto.BookDto;
+import kxie.uoa.bookshop.dto.OrderDto;
 import kxie.uoa.bookshop.dto.ReviewDto;
 import kxie.uoa.bookshop.dto.UserDto;
+import kxie.uoa.bookshop.services.mappers.UserMapper;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,6 +41,7 @@ public class UserWebServiceTest {
 
 	private static Client _client;
 
+	//private static EntityManager em = Persistence.createEntityManagerFactory("bookShopPU").createEntityManager();
 	/**
 	 * One-time setup method that creates a Web service client.
 	 */
@@ -78,9 +92,9 @@ public class UserWebServiceTest {
 	 */
 	@Test
 	public void addUserTest() {
-		UserDto karen = new UserDto("jeffuser", "1234", "Jeff", "Jordan");
+		UserDto jeff = new UserDto("jeffuser", "1234", "Jeff", "Jordan");
 
-		Response response = _client.target(WEB_SERVICE_URI_USERS).request().post(Entity.xml(karen));
+		Response response = _client.target(WEB_SERVICE_URI_USERS).request().post(Entity.xml(jeff));
 		if (response.getStatus() != 201) {
 			_logger.error("Failed to new User; Web service responded with: " + response.getStatus());
 			fail("Failed to create new User");
@@ -90,12 +104,12 @@ public class UserWebServiceTest {
 		response.close();
 
 		// Query the Web service for the new User
-		UserDto karenFromService = _client.target(location).request().accept("application/xml").get(UserDto.class);
+		UserDto jeffFromService = _client.target(location).request().accept("application/xml").get(UserDto.class);
 
-		assertEquals(karen.getLastname(), karenFromService.getLastname());
-		assertEquals(karen.getFirstname(), karenFromService.getFirstname());
-		assertEquals(karen.getUsername(), karenFromService.getUsername());
-		assertEquals(karen.getPassword(), karenFromService.getPassword());
+		assertEquals(jeff.getLastname(), jeffFromService.getLastname());
+		assertEquals(jeff.getFirstname(), jeffFromService.getFirstname());
+		assertEquals(jeff.getUsername(), jeffFromService.getUsername());
+		assertEquals(jeff.getPassword(), jeffFromService.getPassword());
 	}
 	
 	/**
@@ -125,7 +139,7 @@ public class UserWebServiceTest {
 	}
 
 	/**
-	 * Tests that the Web service can process requests to record new User order.
+	 * Tests that the Web service can process requests to record new User review.
 	 */
 	@Test
 	public void addReview() {
@@ -141,6 +155,45 @@ public class UserWebServiceTest {
 			fail("Failed to create new order");
 		}
 		response.close();
+	}
+	
+	/**
+	 * Tests that the Web service can process requests to record new User review.
+	 */
+	public void addOrderToUser() {
+
+		// Query the Web service for the new User
+		UserDto userDto = _client.target(WEB_SERVICE_URI_USERS + "/1").request().accept("application/xml").get(UserDto.class);
+		
+		User user = UserMapper.toDomainModel(userDto);
+		
+		Set<BookOrder> booksOrdered = new HashSet<BookOrder>();
+		booksOrdered.add(new BookOrder(new Book("HP", "JK", Genre.COMEDY, 1.11), 1));
+		OrderDto newOrder = new OrderDto(
+				user.getId(),
+				1.11, 
+				booksOrdered, 
+				new Date(), 
+				PaymentMethod.PAYPAL.getMethod(), 
+				ShippingMethod.EXPRESS.getMethod(),
+				OrderStatus.PROCESSING.getStatus());
+
+		Response response = _client
+				.target(WEB_SERVICE_URI_USERS + "/1/orders")
+				.request().post(Entity.xml(newOrder));
+		
+		if (response.getStatus() != 204) {
+			_logger.error("Reponse code:" + response.getStatus());
+			fail("Failed to create new order");
+		}
+		response.close();
+
+		// Query the Web service for the Parolee whose location has been
+		// updated.
+		User oliver = _client
+				.target(WEB_SERVICE_URI_USERS + "/1").request()
+				.accept("application/xml").get(User.class);
+		assertEquals(1, oliver.getOrders().size());
 	}
 
 }

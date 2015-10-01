@@ -1,110 +1,99 @@
 package kxie.uoa.bookshop.dto;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import kxie.uoa.bookshop.adapters.DateAdapter;
+import kxie.uoa.bookshop.domain.BookOrder;
 
 @XmlRootElement(name = "order")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrderDto {
 
 	@XmlAttribute(name = "id")
-	private Long _id;
+	private long id;
+	
+	@XmlElement(name = "orderee")
+	private long orderee;
 
 	@XmlElement(name = "total")
-	private double _totalCost;
+	private double totalCost;
 
-	@XmlElement(name = "date-ordered")
-	private String _dateOrdered;
+	@XmlElement(name = "booksOrdered")
+	private Set<BookOrder> booksOrdered = new HashSet<BookOrder>();
 
-	@XmlElement(name = "order-status")
-	private String _orderStatus;
+	@XmlElement(name = "dateOrdered")
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	private Date dateOrdered;
 
-	@XmlElement(name = "shipping-method")
-	private String _shippingMethod;
+	@XmlElement(name = "orderStatus")
+	private String orderStatus;
+	
+	@XmlElement(name = "paymentMethod")
+	private String paymentMethod;
 
-	@XmlElement(name = "payment")
-	private String _paymentMethod;
+	@XmlElement(name = "shippingMethod")
+	private String shippingMethod;
 
-	@XmlElement(name = "name")
-	private String _customerName;
-
-	@SuppressWarnings("unused")
-	private OrderDto() {
+	protected OrderDto() {
 	}
 
+	public OrderDto(long orderee, double totalCost, Set<BookOrder> booksOrdered, Date dateOrdered, String shippingMethod, String paymentMethod, String orderStatus) {
+		this(0, orderee, totalCost, booksOrdered, dateOrdered, shippingMethod, paymentMethod, orderStatus);
+	}
+	
 	/**
-	 * Constructor for OrderDto.
-	 * 
-	 * @param id
-	 * @param totalCost
-	 * @param booksOrdered
-	 * @param shippingMethod
-	 * @param paymentMethod
+	 * Constructor for OrderDto instance.
 	 */
-	public OrderDto(long id, double totalCost, String dateOrdered, String customerName, String shippingMethod, String paymentMethod) {
-		_id = id;
-		_totalCost = totalCost;
-		_customerName = customerName;
-		_dateOrdered = dateOrdered;
-		_orderStatus = "Processing";
-		_shippingMethod = shippingMethod;
-		_paymentMethod = paymentMethod;
+	public OrderDto(long id, long orderee, double totalCost, Set<BookOrder> booksOrdered, Date dateOrdered, String shippingMethod, String paymentMethod, String orderStatus) {
+		this.id = id;
+		this.orderee = orderee;
+		this.totalCost = totalCost;
+		this.totalCost = totalCost;
+		this.booksOrdered = booksOrdered;
+		this.dateOrdered = dateOrdered;
+		this.paymentMethod = paymentMethod;
+		this.shippingMethod = shippingMethod;
+		this.orderStatus = orderStatus;
 	}
 
-	public long getId() {
-		return _id;
-	}
+	// Getters and Setters
+	public Long getId() {return id;}
 
-	public double getTotalCost() {
-		return _totalCost;
-	}
+	public double getTotalCost() {return totalCost;}
+	
+	public void setTotalCost(double totalCost) {this.totalCost = totalCost;}
+	
+	public Set<BookOrder> getBooksOrdered() {return booksOrdered;}
 
-	public void setTotalCost(double totalCost) {
-		_totalCost = totalCost;
-	}
+	public void setBooksOrdered(Set<BookOrder> booksOrdered) {this.booksOrdered = booksOrdered;}
+	
+	public long getOrderee() {return orderee;}
 
-	public String getPaymentMethod() {
-		return _paymentMethod;
-	}
+	public void setOrderee(long orderee) {this.orderee = orderee;}
 
-	public void setPaymentMethod(String paymentMethod) {
-		_paymentMethod = paymentMethod;
-	}
+	public String getPaymentMethod() {return paymentMethod;}
 
-	public String getDateOrdered() {
-		return _dateOrdered;
-	}
+	public void setPaymentMethod(String paymentMethod) {this.paymentMethod = paymentMethod;}
 
-	public void setDateOrdered(Date date) {
-		_dateOrdered = date.toString();
-	}
+	public Date getDateOrdered() {return dateOrdered;}
 
-	public String getOrderStatus() {
-		return _orderStatus;
-	}
+	public void setDateOrdered(Date date) {this.dateOrdered = date;}
 
-	public void setOrderStatus(String orderStatus) {
-		_orderStatus = orderStatus;
-	}
+	public String getOrderStatus() {return orderStatus;}
 
-	public String getShippingMethod() {
-		return _shippingMethod;
-	}
+	public void setOrderStatus(String orderStatus) {this.orderStatus = orderStatus;}
 
-	public void setShippingMethod(String shippingMethod) {
-		_shippingMethod = shippingMethod;
-	}
+	public String getShippingMethod() {return shippingMethod;}
 
-	public String getCustomerName() {
-		return _customerName;
-	}
+	public void setShippingMethod(String shippingMethod) {this.shippingMethod = shippingMethod;}
 
-	public void setCustomerName(String customerName) {
-		_customerName = customerName;
-	}
 }
