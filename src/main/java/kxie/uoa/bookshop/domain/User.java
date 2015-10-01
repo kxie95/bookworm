@@ -1,10 +1,15 @@
 package kxie.uoa.bookshop.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * A class to represent a user account.
@@ -34,6 +39,9 @@ public class User {
 
 	@Column
 	private String firstname;
+	
+	@OneToMany(mappedBy="reviewer", fetch = FetchType.LAZY)
+	private List<Review> reviews = new ArrayList<>();
 
 	protected User() {
 	}
@@ -68,4 +76,13 @@ public class User {
 	public String getFirstname() {return firstname;}
 
 	public void setFirstname(String firstname) {this.firstname = firstname;}
+
+	public List<Review> getReviews() {return reviews;}
+
+	public void setReviews(List<Review> reviews) {this.reviews = reviews;}
+	
+	/**
+	 * Used to update the collection of reviews a user has.
+	 */
+	public void addReview(Review review) {this.reviews.add(review);}
 }
