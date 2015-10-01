@@ -14,7 +14,9 @@ public class BookShopApplication extends Application {
 	public BookShopApplication() {
 		// Register the UserResource singleton to handle HTTP requests.
 		UserResource resource = new UserResource();
+		BookResourceImpl bookResource = new BookResourceImpl();
 		singletons.add(resource);
+		singletons.add(bookResource);
 		// Register the ContextResolver class for JAXB.
 		classes.add(BookShopResolver.class);
 

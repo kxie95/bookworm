@@ -90,8 +90,13 @@ public class UserDto {
 			return true;
 
 		UserDto rhs = (UserDto) obj;
-		return new EqualsBuilder().append(id, rhs.id).append(username, rhs.id).append(password, rhs.password)
-				.append(lastname, rhs.lastname).append(firstname, rhs.firstname).isEquals();
+		return new EqualsBuilder()
+		.append(id, rhs.id)
+		.append(username, rhs.username)
+		.append(password, rhs.password)
+		.append(lastname, rhs.lastname)
+		.append(firstname, rhs.firstname)
+		.isEquals();
 	}
 
 	@Override

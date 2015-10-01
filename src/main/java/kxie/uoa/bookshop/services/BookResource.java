@@ -22,40 +22,34 @@ import kxie.uoa.bookshop.dto.BookDto;
 public interface BookResource {
 
 	/**
-	 * Handles incoming HTTP POST requests for the relative URI "parolees", 
-	 * where the request body contains XML data. This method creates new 
-	 * Parolees.
-	 * @param stores the HTTP request message body. This is a regular 
-	 * java.io.InputStream object and is expected to hold a XML representation
-	 * of the Parolee to create, 
+	 * Handles incoming HTTP POST requests for the relative URI "books", 
+	 * This method creates new Books.
+	 * @param bookDto representing the Book domain class.
 	 * @return a JAX-RS Response object that the JAX-RS implementation uses to
 	 * prepare the HTTP response message.
 	 */
    @POST
    @Consumes("application/xml")
-   Response createBook(BookDto book);
-
+   Response createBook(BookDto bookDto);
 
    /**
-    * Handles incoming HTTP GET requests for the relative URI "parolees/{id}.
-    * @param id the unique id of the Parolee to retrieve.
-    * @return a StreamingOutput object storing a representation of the required
-    *         Parolee in XML format.
+    * Handles incoming HTTP GET requests for the relative URI "books/{id}.
+    * @param id the unique id of the Book to retrieve.
+    * @return bookDto representing the Book domain class.
     */
    @GET
    @Path("{id}")
    @Produces("application/xml")
-   BookDto retrieveBook(@PathParam("id") int id);
+   BookDto retrieveBook(@PathParam("id") long id);
 
    /**
-    * Handles incoming HTTP PUT requests for the relative URI "parolees/{id}.
-    * @param id the unique id of the Parolee to retrieve.
-    * @param is stores the HTTP request message body, which is expected to hold
-    * a XML representation of the updated Parolee.
+    * Handles incoming HTTP PUT requests for the relative URI "books/{id}.
+    * @param id the unique id of the Book to retrieve.
+    * @param bookDto the dto class representing the Book domain class.
     */
    @PUT
    @Path("{id}")
    @Consumes("application/xml")
-   void updateParolee(@PathParam("id") int id, BookDto bookDto);
+   void updateBook(@PathParam("id") long id, BookDto bookDto);
 }
 

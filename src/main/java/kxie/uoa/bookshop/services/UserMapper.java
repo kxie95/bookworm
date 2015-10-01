@@ -6,7 +6,10 @@ import kxie.uoa.bookshop.dto.UserDto;
 public class UserMapper {
 
 	public static User toDomainModel(UserDto userDto) {
-		User fullUser = new User(userDto.getUsername(), userDto.getPassword(), userDto.getLastname(),
+		User fullUser = new User(
+				userDto.getUsername(), 
+				userDto.getPassword(), 
+				userDto.getLastname(),
 				userDto.getFirstname());
 		return fullUser;
 	}
