@@ -6,8 +6,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import kxie.uoa.bookshop.domain.Order;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -25,22 +23,19 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class UserDto {
 
 	@XmlAttribute(name = "id")
-	private long _id;
+	private long id;
 
 	@XmlElement(name = "username")
-	private String _username;
+	private String username;
 
 	@XmlElement(name = "password")
-	private String _password;
+	private String password;
 
 	@XmlElement(name = "last-name")
-	private String _lastname;
+	private String lastname;
 
 	@XmlElement(name = "first-name")
-	private String _firstname;
-
-	@XmlElement(name = "most-recent-order")
-	private Order _mostRecentOrder;
+	private String firstname;
 
 	protected UserDto() {
 
@@ -51,66 +46,41 @@ public class UserDto {
 	 * Web service clients when creating new Users.
 	 */
 	public UserDto(String username, String password, String lastname, String firstname) throws IllegalArgumentException {
-		this(0, username, password, lastname, firstname, null);
+		this(0, username, password, lastname, firstname);
 	}
 
 	/**
 	 * Constructs a DTO User instance. It is intended to be used by the Web
-	 * Service implementation when creating a DTO User from a domain-model
-	 * Parolee object.
+	 * Service implementation when creating a DTO User from a domain-model User
+	 * object.
 	 */
-	public UserDto(long id, String username, String password, String lastname, String firstname, Order mostRecent) {
-		_id = id;
-		_username = username;
-		_password = password;
-		_lastname = lastname;
-		_firstname = firstname;
-		_mostRecentOrder = mostRecent;
+	public UserDto(long id, String username, String password, String lastname, String firstname) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.lastname = lastname;
+		this.firstname = firstname;
 	}
+	
+	// Getters and Setters
 
-	public long getId() {
-		return _id;
-	}
+	public long getId() {return id;}
 
-	public String getLastname() {
-		return _lastname;
-	}
+	public String getLastname() {return lastname;}
 
-	public void setLastname(String lastname) {
-		_lastname = lastname;
-	}
+	public void setLastname(String lastname) {this.lastname = lastname;}
 
-	public String getFirstname() {
-		return _firstname;
-	}
+	public String getFirstname() {return firstname;}
 
-	public void setFirstname(String firstname) {
-		_firstname = firstname;
-	}
+	public void setFirstname(String firstname) {this.firstname = firstname;}
 
-	public String getUsername() {
-		return _username;
-	}
+	public String getUsername() {return username;}
 
-	public void setUsername(String username) {
-		_username = username;
-	}
+	public void setUsername(String username) {this.username = username;}
 
-	public String getPassword() {
-		return _password;
-	}
+	public String getPassword() {return password;}
 
-	public void setPassword(String password) {
-		_password = password;
-	}
-
-	public Order getMostRecentOrder() {
-		return _mostRecentOrder;
-	}
-
-	public void setMostRecentOrder(Order mostRecentOrder) {
-		_mostRecentOrder = mostRecentOrder;
-	}
+	public void setPassword(String password) {this.password = password;}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -120,14 +90,13 @@ public class UserDto {
 			return true;
 
 		UserDto rhs = (UserDto) obj;
-		return new EqualsBuilder().append(_id, rhs._id).append(_username, rhs._id).append(_password, rhs._password)
-				.append(_lastname, rhs._lastname).append(_firstname, rhs._firstname).isEquals();
+		return new EqualsBuilder().append(id, rhs.id).append(username, rhs.id).append(password, rhs.password)
+				.append(lastname, rhs.lastname).append(firstname, rhs.firstname).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 31).append(_id).append(_username).append(_password).append(_lastname).append(_firstname)
-				.toHashCode();
+		return new HashCodeBuilder(17, 31).append(id).toHashCode();
 	}
 
 	@Override
@@ -135,25 +104,25 @@ public class UserDto {
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("User: { [");
-		buffer.append(_id);
+		buffer.append(id);
 		buffer.append("]; ");
 
-		if (_username != null) {
-			buffer.append(_username);
+		if (username != null) {
+			buffer.append(username);
 		}
 
 		buffer.append("\n  ");
-		if (_password != null) {
-			buffer.append(_password);
+		if (password != null) {
+			buffer.append(password);
 		}
 
-		if (_lastname != null) {
-			buffer.append(_lastname);
+		if (lastname != null) {
+			buffer.append(lastname);
 			buffer.append(", ");
 		}
 
-		if (_firstname != null) {
-			buffer.append(_firstname);
+		if (firstname != null) {
+			buffer.append(firstname);
 		}
 
 		buffer.append("; ");

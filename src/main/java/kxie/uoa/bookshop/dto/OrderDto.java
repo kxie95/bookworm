@@ -33,6 +33,7 @@ public class OrderDto {
 	@XmlElement(name = "name")
 	private String _customerName;
 
+	@SuppressWarnings("unused")
 	private OrderDto() {
 	}
 

@@ -3,10 +3,6 @@ package kxie.uoa.bookshop.services.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.persistence.EntityManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -15,8 +11,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import kxie.uoa.bookshop.domain.Order;
-import kxie.uoa.bookshop.dto.OrderDto;
 import kxie.uoa.bookshop.dto.UserDto;
 
 import org.junit.AfterClass;
@@ -32,7 +26,6 @@ public class UserWebServiceTest {
 	private static final String WEB_SERVICE_URI = "http://localhost:8080/services/users";
 
 	private static Client _client;
-	private static EntityManager _entityManager;
 
 	/**
 	 * One-time setup method that creates a Web service client.
@@ -76,7 +69,7 @@ public class UserWebServiceTest {
 	 * Tests that the Web service can create a new User.
 	 */
 	@Test
-	public void addUser() {
+	public void addUserTest() {
 		UserDto karen = new UserDto("kxie", "1234", "Xie", "Karen");
 
 		Response response = _client.target(WEB_SERVICE_URI).request().post(Entity.xml(karen));
@@ -97,35 +90,35 @@ public class UserWebServiceTest {
 		assertEquals(karen.getPassword(), karenFromService.getPassword());
 	}
 
-	/**
-	 * Tests that the Web service can process requests to record new User order.
-	 */
-	@Test
-	public void addToOrderHistory() {
-
-		AtomicLong orderId = new AtomicLong();
-		orderId.set(0);
-		// Make new order
-		OrderDto newOrder = new OrderDto(orderId.incrementAndGet(), 10.11, new Date().toString(), "Karen Xie", "Standard", "Bank_transfer");
-
-		Response response = _client.target(WEB_SERVICE_URI + "/1/orders").request().put(Entity.xml(newOrder));
-		if (response.getStatus() != 204) {
-			_logger.error("Failed to new order; Web service responded with: " + response.getStatus());
-			fail("Failed to create new order");
-		}
-		response.close();
-
-		// Query the Web service for the User whose order history has been
-		// updated.
-		UserDto karen = _client.target(WEB_SERVICE_URI + "/1").request().accept("application/xml").get(UserDto.class);
-		Order mostRecentOrder = karen.getMostRecentOrder();
-		assertEquals(newOrder.getCustomerName(), mostRecentOrder.getCustomerName());
-		assertEquals(newOrder.getOrderStatus(), mostRecentOrder.getOrderStatus());
-		assertEquals(newOrder.getPaymentMethod(), mostRecentOrder.getPaymentMethod());
-		assertEquals(newOrder.getShippingMethod(), mostRecentOrder.getShippingMethod());
-		assertEquals(newOrder.getTotalCost(), mostRecentOrder.getTotalCost(), 0.01);
-
-	}
+//	/**
+//	 * Tests that the Web service can process requests to record new User order.
+//	 */
+//	@Test
+//	public void addToOrderHistory() {
+//
+//		AtomicLong orderId = new AtomicLong();
+//		orderId.set(0);
+//		// Make new order
+//		OrderDto newOrder = new OrderDto(orderId.incrementAndGet(), 10.11, new Date().toString(), "Karen Xie", "Standard", "Bank_transfer");
+//
+//		Response response = _client.target(WEB_SERVICE_URI + "/1/orders").request().put(Entity.xml(newOrder));
+//		if (response.getStatus() != 204) {
+//			_logger.error("Failed to new order; Web service responded with: " + response.getStatus());
+//			fail("Failed to create new order");
+//		}
+//		response.close();
+//
+//		// Query the Web service for the User whose order history has been
+//		// updated.
+//		UserDto karen = _client.target(WEB_SERVICE_URI + "/1").request().accept("application/xml").get(UserDto.class);
+//		Order mostRecentOrder = karen.getMostRecentOrder();
+//		assertEquals(newOrder.getCustomerName(), mostRecentOrder.getCustomerName());
+//		assertEquals(newOrder.getOrderStatus(), mostRecentOrder.getOrderStatus());
+//		assertEquals(newOrder.getPaymentMethod(), mostRecentOrder.getPaymentMethod());
+//		assertEquals(newOrder.getShippingMethod(), mostRecentOrder.getShippingMethod());
+//		assertEquals(newOrder.getTotalCost(), mostRecentOrder.getTotalCost(), 0.01);
+//
+//	}
 
 	/**
 	 * Helper method to print out generated XML by JAXB.

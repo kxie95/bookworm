@@ -1,137 +1,71 @@
 package kxie.uoa.bookshop.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OrderColumn;
-import javax.persistence.Table;
 
+/**
+ * A class to represent a user account.
+ * 
+ * Relationships:
+ * OneToMany with Reviews
+ * OneToMany with Orders
+ * 
+ * @author Karen Xie kxie094
+ *
+ */
 @Entity
-@Table(name = "USERS")
 public class User {
+
 	@Id
-	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long _id;
+	private long id;
 
-	@Column(unique = true, nullable = false)
-	private String _username;
-
-	@Column
-	private String _lastname;
+	@Column(unique=true, nullable=false)
+	private String username;
 
 	@Column
-	private String _firstname;
+	private String password;
 
 	@Column
-	private String _password;
+	private String lastname;
 
-	private ShoppingCart _shoppingCart;
-
-	@OrderColumn(name = "ORDER_ORDER")
-	private List<Order> _orderHistory;
-
-	@OrderColumn(name = "REVIEW_ORDER")
-	private List<Review> _reviews;
-
-	public User(String username, String password, String lastname, String firstname) {
-		_username = username;
-		_password = password;
-		_lastname = lastname;
-		_firstname = firstname;
-	}
-
-	public User(long id, String username, String password, String lastname, String firstname) {
-		_id = id;
-		_username = username;
-		_password = password;
-		_lastname = lastname;
-		_firstname = firstname;
-		_reviews = new ArrayList<Review>();
-		_orderHistory = new ArrayList<Order>();
-	}
-
-	public User(String username) {
-		this(username, null, null, null);
-	}
+	@Column
+	private String firstname;
 
 	protected User() {
 	}
 
-	public Long getId() {
-		return _id;
+	/**
+	 * Constructs a User instance. Id is set by database.
+	 */
+	public User(String username, String password, String lastname, String firstname) {
+		this.username = username;
+		this.password = password;
+		this.lastname = lastname;
+		this.firstname = firstname;
 	}
+	
+	// Getters and Setters
+	public long getId() {return id;}
 
-	public void setId(long id) {
-		_id = id;
-	}
+	public void setId(long id) {this.id = id;}
 
-	public String getUsername() {
-		return _username;
-	}
+	public String getUsername() {return username;}
 
-	public String getPassword() {
-		return _password;
-	}
+	public void setUsername(String username) {this.username = username;}
 
-	public void setPassword(String password) {
-		_password = password;
-	}
+	public String getPassword() {return password;}
 
-	public String getLastname() {
-		return _lastname;
-	}
+	public void setPassword(String password) {this.password = password;}
 
-	public void setLastname(String lastname) {
-		_lastname = lastname;
-	}
+	public String getLastname() {return lastname;}
 
-	public String getFirstname() {
-		return _firstname;
-	}
+	public void setLastname(String lastname) {this.lastname = lastname;}
 
-	public void setFirstname(String firstname) {
-		_firstname = firstname;
-	}
+	public String getFirstname() {return firstname;}
 
-	public ShoppingCart getShoppingCart() {
-		return _shoppingCart;
-	}
-
-	public void setShoppingCart(ShoppingCart shoppingCart) {
-		_shoppingCart = shoppingCart;
-	}
-
-	public List<Order> getOrderHistory() {
-		return _orderHistory;
-	}
-
-	public void setOrderHistory(List<Order> orderHistory) {
-		_orderHistory = orderHistory;
-	}
-
-	public List<Review> getReviews() {
-		return _reviews;
-	}
-
-	public void setReviews(List<Review> reviews) {
-		_reviews = reviews;
-	}
-
-	public void addOrderToHistory(Order order) {
-		_orderHistory.add(0, order);
-	}
-
-	public Order getMostRecentOrder() {
-		if (!_orderHistory.isEmpty()) {
-			return _orderHistory.get(0);
-		}
-		return null;
-	}
-
+	public void setFirstname(String firstname) {this.firstname = firstname;}
 }
