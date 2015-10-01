@@ -6,6 +6,10 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import kxie.uoa.bookshop.services.resources.BookResourceImpl;
+import kxie.uoa.bookshop.services.resources.ReviewResourceImpl;
+import kxie.uoa.bookshop.services.resources.UserResource;
+
 @ApplicationPath("/services")
 public class BookShopApplication extends Application {
 	private Set<Object> singletons = new HashSet<Object>();
@@ -13,10 +17,13 @@ public class BookShopApplication extends Application {
 
 	public BookShopApplication() {
 		// Register the UserResource singleton to handle HTTP requests.
-		UserResource resource = new UserResource();
+		UserResource userResource = new UserResource();
 		BookResourceImpl bookResource = new BookResourceImpl();
-		singletons.add(resource);
+		ReviewResourceImpl reviewResource = new ReviewResourceImpl();
+		singletons.add(userResource);
 		singletons.add(bookResource);
+		singletons.add(reviewResource);
+		
 		// Register the ContextResolver class for JAXB.
 		classes.add(BookShopResolver.class);
 

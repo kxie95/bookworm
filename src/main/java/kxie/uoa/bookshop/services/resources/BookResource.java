@@ -1,4 +1,4 @@
-package kxie.uoa.bookshop.services;
+package kxie.uoa.bookshop.services.resources;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,10 +12,10 @@ import javax.ws.rs.core.Response;
 import kxie.uoa.bookshop.dto.BookDto;
 
 /**
- * Service interface for the Parolees application. This interface allows 
- * Parolees to be created, queried (by id) and updated.
+ * Service interface for the BookShop application. This interface allows 
+ * Books to be created, queried (by id) and updated.
  * 
- * @author Ian Warren
+ * @author Karen Xie kxie094, based on the template from Ian Warren.
  *
  */
 @Path("/books")

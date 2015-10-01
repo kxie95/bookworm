@@ -34,8 +34,23 @@ public class Review {
 	@Column(nullable = false)
 	private String comment;
 	
+	protected Review() {}
+	
+	/**
+	 * Constructor for Review instance. Id set by database.
+	 */
+	public Review(User reviewer, Book book, String comment) {
+		this.reviewer = reviewer;
+		this.book = book;
+		this.comment = comment;
+	}
+	
 	// Getters and Setters
 	
+	public Long getId() {return id;}
+
+	public void setId(Long id) {this.id = id;}
+
 	public User getReviewer() {return reviewer;}
 
 	public void setReviewer(User reviewer) {this.reviewer = reviewer;}

@@ -1,4 +1,4 @@
-package kxie.uoa.bookshop.services;
+package kxie.uoa.bookshop.services.resources;
 
 import java.net.URI;
 
@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import kxie.uoa.bookshop.domain.User;
 import kxie.uoa.bookshop.dto.UserDto;
+import kxie.uoa.bookshop.services.mappers.UserMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

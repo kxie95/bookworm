@@ -5,6 +5,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 import kxie.uoa.bookshop.domain.Book;
+import kxie.uoa.bookshop.domain.Review;
 import kxie.uoa.bookshop.domain.User;
 
 public class BookShopResolver implements ContextResolver<JAXBContext> {
@@ -14,7 +15,7 @@ public class BookShopResolver implements ContextResolver<JAXBContext> {
 		try {
 			// The JAXB Context should be able to marshal and unmarshal the
 			// specified classes.
-			_context = JAXBContext.newInstance(User.class, Book.class);
+			_context = JAXBContext.newInstance(User.class, Book.class, Review.class);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -22,7 +23,9 @@ public class BookShopResolver implements ContextResolver<JAXBContext> {
 
 	@Override
 	public JAXBContext getContext(Class<?> type) {
-		if (type.equals(User.class) || type.equals(Book.class)) {
+		if (type.equals(User.class)
+			|| type.equals(Book.class)
+			|| type.equals(Review.class)) {
 			return _context;
 		} else {
 			return null;

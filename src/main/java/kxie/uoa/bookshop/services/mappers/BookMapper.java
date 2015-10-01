@@ -1,4 +1,4 @@
-package kxie.uoa.bookshop.services;
+package kxie.uoa.bookshop.services.mappers;
 
 import kxie.uoa.bookshop.domain.Book;
 import kxie.uoa.bookshop.domain.Genre;
@@ -19,7 +19,7 @@ public class BookMapper {
 		return fullBook;
 	}
 
-	static BookDto toDto(Book book) {
+	public static BookDto toDto(Book book) {
 		BookDto bookDto = new BookDto(
 				book.getId(), 
 				book.getTitle(), 

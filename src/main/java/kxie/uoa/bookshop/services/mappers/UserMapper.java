@@ -1,4 +1,4 @@
-package kxie.uoa.bookshop.services;
+package kxie.uoa.bookshop.services.mappers;
 
 import kxie.uoa.bookshop.domain.User;
 import kxie.uoa.bookshop.dto.UserDto;
@@ -14,7 +14,7 @@ public class UserMapper {
 		return fullUser;
 	}
 
-	static UserDto toDto(User user) {
+	public static UserDto toDto(User user) {
 		UserDto userDto = new UserDto(
 				user.getId(), 
 				user.getUsername(), 

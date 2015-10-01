@@ -27,6 +27,9 @@ public class ReviewDto {
 	@XmlElement(name = "comment")
 	private String comment;
 	
+	/**Required by JAXB */
+	protected ReviewDto() {}
+	
 	/**
 	 * Constructs a DTO User instance. This method is intended to be called by
 	 * Web service clients when creating new Users.

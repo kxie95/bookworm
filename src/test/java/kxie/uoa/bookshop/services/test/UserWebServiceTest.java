@@ -9,6 +9,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
 import kxie.uoa.bookshop.dto.BookDto;
+import kxie.uoa.bookshop.dto.ReviewDto;
 import kxie.uoa.bookshop.dto.UserDto;
 
 import org.junit.AfterClass;
@@ -23,6 +24,7 @@ public class UserWebServiceTest {
 
 	private static final String WEB_SERVICE_URI_USERS = "http://localhost:8080/services/users";
 	private static final String WEB_SERVICE_URI_BOOKS = "http://localhost:8080/services/books";
+	private static final String WEB_SERVICE_URI_REVIEWS = "http://localhost:8080/services/reviews";
 
 	private static Client _client;
 
@@ -40,18 +42,23 @@ public class UserWebServiceTest {
 	 */
 	@Before
 	public void reloadServerData() {
+		// Populate servers with data.
 		Response responseUsers = _client.target(WEB_SERVICE_URI_USERS).request().put(null);
+		responseUsers.close();
+		
+		UserDto karen = new UserDto("ksmith", "1234", "Kate", "Smith");
+		responseUsers = _client.target(WEB_SERVICE_URI_USERS).request().post(Entity.xml(karen));
 		responseUsers.close();
 		
 		Response responseBooks = _client.target(WEB_SERVICE_URI_BOOKS).request().put(null);
 		responseBooks.close();
-
-		// Pause briefly before running any tests. Test addParoleeMovement(),
-		// for example, involves creating a timestamped value (a movement) and
-		// having the Web service compare it with data just generated with
-		// timestamps. Joda's Datetime class has only millisecond precision,
-		// so pause so that test-generated timestamps are actually later than
-		// timestamped values held by the Web service.
+		
+		BookDto bookDto = new BookDto("Harry Potter", "JK Rowling", "Novel", 20.00);
+		responseBooks = _client.target(WEB_SERVICE_URI_BOOKS).request().post(Entity.xml(bookDto));
+		responseBooks.close();
+		
+		Response responseReviews = _client.target(WEB_SERVICE_URI_REVIEWS).request().put(null);
+		responseReviews.close();
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
@@ -71,7 +78,7 @@ public class UserWebServiceTest {
 	 */
 	@Test
 	public void addUserTest() {
-		UserDto karen = new UserDto("hello", "1234", "Hello", "World");
+		UserDto karen = new UserDto("jeffuser", "1234", "Jeff", "Jordan");
 
 		Response response = _client.target(WEB_SERVICE_URI_USERS).request().post(Entity.xml(karen));
 		if (response.getStatus() != 201) {
@@ -96,7 +103,7 @@ public class UserWebServiceTest {
 	 */
 	@Test
 	public void addBookTest() {
-		BookDto bookDto = new BookDto("Harry Potter", "JK Rowling", "Novel", 20.00);
+		BookDto bookDto = new BookDto("Angels and Demons", "Dan Brown", "Novel", 20.00);
 
 		Response response = _client.target(WEB_SERVICE_URI_BOOKS).request().post(Entity.xml(bookDto));
 		
@@ -117,32 +124,23 @@ public class UserWebServiceTest {
 		assertEquals(bookDto.getPrice(), bookFromService.getPrice(), 0.01);
 	}
 
-//	/**
-//	 * Tests that the Web service can process requests to record new User order.
-//	 */
-//	@Test
-//	public void addReview() {
-//
-//		// Make new order
-//		ReviewDto newReview = new ReviewDto();
-//
-//		Response response = _client.target(WEB_SERVICE_URI + "/1/orders").request().put(Entity.xml(newOrder));
-//		if (response.getStatus() != 204) {
-//			_logger.error("Failed to new order; Web service responded with: " + response.getStatus());
-//			fail("Failed to create new order");
-//		}
-//		response.close();
-//
-//		// Query the Web service for the User whose order history has been
-//		// updated.
-//		UserDto karen = _client.target(WEB_SERVICE_URI + "/1").request().accept("application/xml").get(UserDto.class);
-//		Order mostRecentOrder = karen.getMostRecentOrder();
-//		assertEquals(newOrder.getCustomerName(), mostRecentOrder.getCustomerName());
-//		assertEquals(newOrder.getOrderStatus(), mostRecentOrder.getOrderStatus());
-//		assertEquals(newOrder.getPaymentMethod(), mostRecentOrder.getPaymentMethod());
-//		assertEquals(newOrder.getShippingMethod(), mostRecentOrder.getShippingMethod());
-//		assertEquals(newOrder.getTotalCost(), mostRecentOrder.getTotalCost(), 0.01);
-//
-//	}
+	/**
+	 * Tests that the Web service can process requests to record new User order.
+	 */
+	@Test
+	public void addReview() {
+
+		// Make new review
+		long userId = 1;
+		long bookId = 1;
+		ReviewDto newReview = new ReviewDto(userId, bookId, "This was so amazing.");
+
+		Response response = _client.target(WEB_SERVICE_URI_REVIEWS).request().post(Entity.xml(newReview));
+		if (response.getStatus() != 201) {
+			_logger.error("Failed to create new review; Web service responded with: " + response.getStatus());
+			fail("Failed to create new order");
+		}
+		response.close();
+	}
 
 }
