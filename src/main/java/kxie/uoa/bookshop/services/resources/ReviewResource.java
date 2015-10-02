@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import kxie.uoa.bookshop.dto.ReviewDto;
 
 /**
- * Service interface for the reviewShop application. Allows reviews
+ * Service interface for the BookShop application. Allows reviews
  * to be created, queried (by Id) and updated.
  * @author Karen Xie kxie094, based on the template from Ian Warren.
  *

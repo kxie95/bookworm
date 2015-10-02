@@ -9,6 +9,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * Dto class of Book used by the web service when sending data. 
+ * @author Karen Xie kxie094
+ *
+ */
 @XmlRootElement(name = "book")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BookDto {

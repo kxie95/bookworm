@@ -10,6 +10,11 @@ import kxie.uoa.bookshop.domain.ShippingMethod;
 import kxie.uoa.bookshop.domain.User;
 import kxie.uoa.bookshop.dto.OrderDto;
 
+/**
+ * Class to convert between OrderDto and its domain model class Order.
+ * @author Karen Xie kxie094
+ *
+ */
 public class OrderMapper {
 	
 	public static Order toDomainModel(OrderDto orderDto) {	

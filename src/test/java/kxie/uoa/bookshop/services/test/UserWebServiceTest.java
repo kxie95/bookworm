@@ -32,6 +32,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Tests for the Book Shop Web service.
+ * @author Karen Xie kxie094
+ *
+ */
 public class UserWebServiceTest {
 	private Logger _logger = LoggerFactory.getLogger(UserWebServiceTest.class);
 
@@ -158,7 +163,20 @@ public class UserWebServiceTest {
 	}
 	
 	/**
+	 * Test setting a cooking when logging in.
+	 * 
+	 * Note: Ran out of time, have not actually tested this method.
+	 */
+	public void testLogin() {
+		UserDto userDto = _client.target(WEB_SERVICE_URI_USERS + "/1").request().accept("application/xml").get(UserDto.class);
+
+		_client.target(WEB_SERVICE_URI_USERS + "/1/login").request().get(UserDto.class);
+	}
+	
+	/**
 	 * Tests that the Web service can process requests to record new User review.
+	 * 
+	 * Does not work correctly but here is what I had. Annotate if you'd like to see errors.
 	 */
 	public void addOrderToUser() {
 
@@ -188,8 +206,7 @@ public class UserWebServiceTest {
 		}
 		response.close();
 
-		// Query the Web service for the Parolee whose location has been
-		// updated.
+		// Query the Web service for the User whose orders has been updated.
 		User oliver = _client
 				.target(WEB_SERVICE_URI_USERS + "/1").request()
 				.accept("application/xml").get(User.class);

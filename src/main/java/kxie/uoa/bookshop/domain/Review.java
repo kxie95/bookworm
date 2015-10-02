@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Class representing a review for a book by a user.
- * @author Karen
+ * @author Karen Xie kxie094
  *
  */
 @Entity

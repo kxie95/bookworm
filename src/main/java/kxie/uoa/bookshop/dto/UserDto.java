@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/* Class to represent a User. 
+/** Dto class representing a User. 
  *  
  * A DTO User is described by:
  * - username, password, lastname, firstname
@@ -17,7 +17,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * A User is uniquely identified by an id value of type long.
  * 
  */
-
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserDto {

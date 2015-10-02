@@ -1,6 +1,9 @@
 package kxie.uoa.bookshop.domain;
 
-
+/**
+ * Enum class representing a genre.
+ * @author Karen Xie kxie094
+ */
 public enum Genre {
 
 	COMEDY("Comedy"), DRAMA("Drama"), NOVEL("Novel"), NON_FICTION("Non fiction"), REALISTIC_FICTION("Realistic fiction"), ROMANCE("Romance"), SATIRE("Satire"), TRAGEDY("Tragedy");

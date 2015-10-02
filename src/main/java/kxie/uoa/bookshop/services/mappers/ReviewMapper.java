@@ -8,6 +8,11 @@ import kxie.uoa.bookshop.domain.Review;
 import kxie.uoa.bookshop.domain.User;
 import kxie.uoa.bookshop.dto.ReviewDto;
 
+/**
+ * Class to convert between dto class ReviewDto and its domain class Review.
+ * @author Karen Xie kxie094
+ *
+ */
 public class ReviewMapper {
 	
 	private static EntityManager em = Persistence.createEntityManagerFactory("bookShopPU").createEntityManager();

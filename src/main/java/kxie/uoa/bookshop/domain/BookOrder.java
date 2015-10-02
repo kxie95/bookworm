@@ -36,6 +36,8 @@ public class BookOrder {
 		this.quantity = quantity;
 	}
 
+	// Getters and Setters
+
 	public Book getBook() {return book;}
 	
 	public void setBook(Book book) {this.book = book;}

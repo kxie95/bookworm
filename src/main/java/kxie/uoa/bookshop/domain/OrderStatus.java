@@ -1,5 +1,9 @@
 package kxie.uoa.bookshop.domain;
 
+/**
+ * Enum representing the order status of an Order.
+ * @author Karen Xie kxie094
+ */
 public enum OrderStatus {
 	PROCESSING("Processing"), SENT("Sent"), DELIVERED("Delivered");
 	

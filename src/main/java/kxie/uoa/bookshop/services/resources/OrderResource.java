@@ -38,7 +38,7 @@ public interface OrderResource {
 	   /**
 	    * Handles incoming HTTP PUT requests for the relative URI "order/{id}.
 	    * @param id the unique id of the Order to retrieve.
-	    * @param bookDto the dto class representing the Order domain class.
+	    * @param orderDto the dto class representing the Order domain class.
 	    */
 	   @PUT
 	   @Path("{id}")

@@ -1,5 +1,10 @@
 package kxie.uoa.bookshop.domain;
 
+/**
+ * Enum representing the ShippingMethod picked to ship an Order.
+ * @author Karen Xie kxie094
+ *
+ */
 public enum ShippingMethod {
 	EXPRESS("Express"), STANDARD("Standard");
 	

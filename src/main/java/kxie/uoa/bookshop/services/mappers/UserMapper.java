@@ -3,6 +3,11 @@ package kxie.uoa.bookshop.services.mappers;
 import kxie.uoa.bookshop.domain.User;
 import kxie.uoa.bookshop.dto.UserDto;
 
+/**
+ * Class to convert between a DtoUser and its domain class User.
+ * @author Karen Xie kxie094
+ *
+ */
 public class UserMapper {
 
 	public static User toDomainModel(UserDto userDto) {

@@ -14,6 +14,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import kxie.uoa.bookshop.adapters.DateAdapter;
 import kxie.uoa.bookshop.domain.BookOrder;
 
+/**
+ * Dto class of Order. Used by the webservice when sending data.
+ * @author Karen
+ *
+ */
 @XmlRootElement(name = "order")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrderDto {

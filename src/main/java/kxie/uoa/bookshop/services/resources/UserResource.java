@@ -5,12 +5,16 @@ import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import kxie.uoa.bookshop.domain.Order;
@@ -104,43 +108,30 @@ public class UserResource {
 		// Update the user's order history.
 		user.addOrder(fullOrder);
 	}
+	
+	/**
+	 * Sets a cookie when a user logs in.
+	 */
+	@GET
+	@Path("{id}/login")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response login(@PathParam("id") long id, UserDto userDto) {
+	    NewCookie cookie = new NewCookie(userDto.getUsername(), userDto.getPassword());
+	    return Response.ok("OK").cookie(cookie).build();
+	}
+	
+	/**
+	 * Removes cookie when user logs out.
+	 */
+	@GET
+	@Path("/logout")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response logout(@CookieParam("id") Cookie cookie) {
+	    if (cookie != null) {
+	        NewCookie newCookie = new NewCookie(cookie, null, 0, false);
+	        return Response.ok("OK").cookie(newCookie).build();
+	    }
+	    return Response.ok("OK - No session").build();
+	}
 
-
-//
-//	/**
-//	 * Returns a view of the User database, represented as a List of UserDto
-//	 * objects.
-//	 */
-//	@GET
-//	@Produces("application/xml")
-//	public List<UserDto> getUsers() {
-//		List<UserDto> users = new ArrayList<UserDto>();
-//
-//		for (Entry<Long, User> entry : _userDB.entrySet()) {
-//			users.add(UserMapper.toDto(entry.getValue()));
-//		}
-//		return users;
-//	}
-//
-//	/**
-//	 * Returns order history for a particular User.
-//	 * 
-//	 * @param id
-//	 *            - the unique identifier of the User.
-//	 * 
-//	 */
-//	@GET
-//	@Path("{id}/orders")
-//	@Produces("application/xml")
-//	public List<Order> getOrderHistory(@PathParam("id") long id) {
-//		// Get the full User object from the database.
-//		User user = findUser(id);
-//
-//		// Return the User's order history.
-//		return user.getOrderHistory();
-//	}
-//
-//	protected User findUser(long id) {
-//		return _userDB.get(id);
-//	}
 }

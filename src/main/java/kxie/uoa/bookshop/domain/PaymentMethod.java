@@ -1,5 +1,10 @@
 package kxie.uoa.bookshop.domain;
 
+/**
+ * Enum class representing the payment method used to pay for an order.
+ * @author Karen Xie, kxie094
+ *
+ */
 public enum PaymentMethod {
 	CREDIT_CARD("Credit Card"), PAYPAL("Paypal"), BANK_TRANSFER("Bank Transfer");
 	
